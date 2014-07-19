@@ -1,4 +1,4 @@
-raspberry-pi-expirements
+Raspberry Pi expirements.
 ========================
 
 Some Raspberry Pi fun code.
