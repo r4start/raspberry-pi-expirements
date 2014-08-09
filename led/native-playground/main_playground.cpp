@@ -15,11 +15,11 @@ using std::string;
 using std::vector;
 using std::fstream;
 
-// 90 leds
-
 using colour_code = std::array<uint8_t, 3>;
 
 using namespace std::chrono;
+
+static constexpr colour_code BLACK{{0x00, 0x00, 0x00}};
 
 static constexpr colour_code BLUE_VIOLET{{0x8a, 0x2b, 0xe2}};
 
@@ -42,9 +42,23 @@ int main(int argc, char *argv[]) {
     led_array[i + 2] = BLUE_VIOLET[2];
   }
 
-  cout << "Write" << endl;
+  cout << "Write blue violet" << endl;
   spi_dev.write(reinterpret_cast<char *>(led_array.data()), led_array.size());
-  
+  spi_dev.flush();
+
+  for (size_t i = 0; i < led_array.size(); i += 3) {
+    led_array[i] = BLACK[0];
+    led_array[i + 1] = BLACK[1];
+    led_array[i + 2] = BLACK[2];
+  }
+
+  cout << "Turn off" << endl;
+  spi_dev.write(reinterpret_cast<char *>(led_array.data()), led_array.size());
+  spi_dev.flush();
+
+  cout << "Sleep" << endl;
+  std::this_thread::sleep_for(std::chrono::seconds(5));
+
   cout << "Close" << endl;
   spi_dev.close();
 
