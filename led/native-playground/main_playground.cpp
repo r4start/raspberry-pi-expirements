@@ -13,7 +13,7 @@ using std::endl;
 using std::thread;
 using std::string;
 using std::vector;
-using std::ofstream;
+using std::fstream;
 
 // 90 leds
 
@@ -28,7 +28,7 @@ static constexpr uint16_t TEST_LED_COUNT{90};
 static const string DEVICE_NAME{"/dev/spidev0.0"};
 
 int main(int argc, char *argv[]) {
-  ofstream spi_dev{DEVICE_NAME, ofstream::binary | ofstream::out};
+  fstream spi_dev{DEVICE_NAME, fstream::binary | fstream::out | fstream::in};
 
   if (!spi_dev.is_open()) {
     cout << "Unable to open " << DEVICE_NAME << endl;
@@ -42,9 +42,16 @@ int main(int argc, char *argv[]) {
     led_array[i + 2] = BLUE_VIOLET[2];
   }
 
+  cout << "Write" << endl;
   spi_dev.write(reinterpret_cast<char *>(led_array.data()), led_array.size());
-
+  
+  cout << "Read" << endl;
+  spi_dev.read(reinterpret_cast<char *>(led_array.data()), led_array.size());
+  
+  cout << "Close" << endl;
   spi_dev.close();
+
+  cout << "End" << endl;
 
   return 0;
 }
