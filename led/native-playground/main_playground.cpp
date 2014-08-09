@@ -45,9 +45,6 @@ int main(int argc, char *argv[]) {
   cout << "Write" << endl;
   spi_dev.write(reinterpret_cast<char *>(led_array.data()), led_array.size());
   
-  cout << "Read" << endl;
-  spi_dev.read(reinterpret_cast<char *>(led_array.data()), led_array.size());
-  
   cout << "Close" << endl;
   spi_dev.close();
 
