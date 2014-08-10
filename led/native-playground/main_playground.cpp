@@ -36,15 +36,19 @@ int main(int argc, char *argv[]) {
   }
 
   vector<uint8_t> led_array(TEST_LED_COUNT * 3);
-  for (size_t i = 0; i < led_array.size(); i += 3) {
-    led_array[i] = BLUE_VIOLET[0];
-    led_array[i + 1] = BLUE_VIOLET[1];
-    led_array[i + 2] = BLUE_VIOLET[2];
-  }
+//  for (size_t i = 0; i < led_array.size(); i += 3) {
+//    led_array[i] = BLUE_VIOLET[0];
+//    led_array[i + 1] = BLUE_VIOLET[1];
+//    led_array[i + 2] = BLUE_VIOLET[2];
+//  }
 
-  cout << "Write blue violet" << endl;
-  spi_dev.write(reinterpret_cast<char *>(led_array.data()), led_array.size());
-  spi_dev.flush();
+//  cout << "Write blue violet" << endl;
+//  spi_dev.write(reinterpret_cast<char *>(led_array.data()), led_array.size());
+//  spi_dev.flush();
+
+//  led_array[0] = BLUE_VIOLET[0];
+//  led_array[1] = BLUE_VIOLET[1];
+//  led_array[2] = BLUE_VIOLET[2];
 
   for (size_t i = 0; i < led_array.size(); i += 3) {
     led_array[i] = BLACK[0];
@@ -55,9 +59,6 @@ int main(int argc, char *argv[]) {
   cout << "Turn off" << endl;
   spi_dev.write(reinterpret_cast<char *>(led_array.data()), led_array.size());
   spi_dev.flush();
-
-  cout << "Sleep" << endl;
-  std::this_thread::sleep_for(std::chrono::seconds(5));
 
   cout << "Close" << endl;
   spi_dev.close();
